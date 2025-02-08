@@ -45,7 +45,7 @@ import { MarcaController } from '../../presentation/controllers/marca.controller
 import { ModeloController } from '../../presentation/controllers/modelo.controller';
 import { TipoVehiculoService } from '../../application/services/tipoVehiculo.service';
 import { TipoVehiculoController } from '../../presentation/controllers/tipoVehiculo.controller';
-import { AuthOrApiKeyMiddlewareVerificator } from '../../presentation/middlewares/apiKey.middleware';
+import { ApiKeyMiddleware } from '../../presentation/middlewares/apiKey.middleware';
 import { DomicilioController } from '../../presentation/controllers/domicilio.controller';
 
 container.register(PrismaClient, { useValue: prismaClient });
@@ -82,7 +82,7 @@ container.register(VehiculoService, { useClass: VehiculoService });
 container.register(MarcasService, { useClass: MarcasService });
 container.register(ModelosService, { useClass: ModelosService });
 container.register(TipoVehiculoService, { useClass: TipoVehiculoService });
-container.register(AuthOrApiKeyMiddlewareVerificator, { useClass: AuthOrApiKeyMiddlewareVerificator });
+container.register(ApiKeyMiddleware, { useClass: ApiKeyMiddleware });
 
 // Controladores
 container.register(EnviosController, { useClass: EnviosController });
@@ -129,4 +129,4 @@ export const domicilioController = container.resolve(DomicilioController);
 
 
 // Middleware
-export const authOrApiKeyMiddlewareVerificator = container.resolve(AuthOrApiKeyMiddlewareVerificator);
+export const apiKeyMiddleware = container.resolve(ApiKeyMiddleware);

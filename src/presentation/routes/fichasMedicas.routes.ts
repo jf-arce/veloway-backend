@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { fichaMedicaController } from '../../infrastructure/dependencies/container.dependency';
+import { apiKeyMiddleware, fichaMedicaController } from '../../infrastructure/dependencies/container.dependency';
 
 export class FichasMedicasRoutes {
   static get routes(): Router {
@@ -7,7 +7,7 @@ export class FichasMedicasRoutes {
 
     router.get('/', fichaMedicaController.getAll);
     router.get('/:conductorID', fichaMedicaController.getFichaMedicaByConductorId);
-    router.get('/compartida/telefono/:telefono', fichaMedicaController.getFichaMedicaCompartidaByTelefono);
+    router.get('/compartida/telefono/:telefono', apiKeyMiddleware.apiKeyVerificator, fichaMedicaController.getFichaMedicaCompartidaByTelefono);
     router.get('/fichaMedica/:fichaMedicaID', fichaMedicaController.getFichaMedica);
     router.post('/create', fichaMedicaController.create);
     router.put('/update/:fichaMedicaID', fichaMedicaController.update);

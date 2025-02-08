@@ -5,10 +5,10 @@ import { JwtService } from '../../infrastructure/jwt/jwtService';
 
 // Middleware para verificar que la API Key está presente en los headers
 @Injectable()
-export class AuthOrApiKeyMiddlewareVerificator {
+export class ApiKeyMiddleware {
   constructor(private readonly usuarioService: UsuarioService) { }
 
-  verify = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  authOrApiKeyVerificator = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const token = req.cookies.access_token; // hacer que agarre el token desde la cookie
 
     if (!token) {
@@ -36,5 +36,23 @@ export class AuthOrApiKeyMiddlewareVerificator {
     } catch (error) {
       res.status(401).json({ message: 'Token inválido o expirado.' });
     }
+  };
+
+  apiKeyVerificator = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const apiKey = req.headers.authorization?.split(' ')[1]; // "Bearer API_KEY"
+
+    if (!apiKey) {
+      res.status(401).json({ message: 'No estás autenticado. API Key no proporcionada.' });
+      return;
+    }
+
+    const existUserApiKey = await this.usuarioService.existUserByApiKey(apiKey);
+
+    if (!existUserApiKey) {
+      res.status(401).json({ message: 'API Key inválida.' });
+      return;
+    }
+
+    next();
   };
 }
