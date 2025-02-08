@@ -27,6 +27,13 @@ export class FichasMedicasService {
     return fichaMedica;
   }
 
+  public async getFichaMedicaCompartidaByTelefono(telefono: string): Promise<FichaMedica> {
+    const fichasCompartidas = await this.fichaMedicaRepository.getFichaMedicaCompartidaByTelefono(telefono);
+
+    if (!fichasCompartidas) throw CustomError.notFound('No se encontró la ficha médica de ese conductor');
+    return fichasCompartidas;
+  }
+
   public async getFichaMedicaByConductorId(conductorID: string): Promise<FichaMedica> {
     const fichaMedicaByConductorId = await this.fichaMedicaRepository.getFichaMedicaByConductorId(conductorID);
 

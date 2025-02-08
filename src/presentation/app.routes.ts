@@ -12,6 +12,7 @@ import { VehiculoRoutes } from './routes/vehiculo.routes';
 import { MarcasRoutes } from './routes/marcas.routes';
 import { ModelosRoutes } from './routes/modelos.routes';
 import { TipoVehiculoRoutes } from './routes/tipoVehiculo.routes';
+import { DomicilioRoutes } from './routes/domicilio.routes';
 
 
 export class AppRoutes {
@@ -20,7 +21,6 @@ export class AppRoutes {
 
     router.use('/api/auth', AuthRoutes.routes);
     router.use('/api/envios', EnviosRoutes.routes);
-
     router.use('/api/viajes', ViajesRoutes.routes);
     router.use('/api/localidades', LocalidadesRoutes.routes);
     router.use('/api/usuarios', UsuarioRoutes.routes);
@@ -32,6 +32,7 @@ export class AppRoutes {
     router.use('/api/marcas', MarcasRoutes.routes);
     router.use('/api/modelos', ModelosRoutes.routes);
     router.use('/api/tipos-vehiculo', TipoVehiculoRoutes.routes);
+    router.use('/api/domicilios', DomicilioRoutes.routes);
 
     return router;
   }

@@ -33,6 +33,38 @@ export class FichasMedicasController {
     }
   };
 
+  getFichaMedicaCompartidaByTelefono = async (req: Request, res: Response) => {
+    const { telefono } = req.params;
+
+    if (!telefono) {
+      res.status(400).json({ message: 'Se necesita un número de teléfono' });
+      return;
+    }
+
+    if (telefono.length < 10) {
+      res.status(400).json({ message: 'Número de teléfono inválido' });
+      return;
+    }
+
+    if (typeof telefono !== 'string') {
+      res.status(400).json({ message: 'El número de teléfono tiene que ser un string' });
+      return;
+    }
+
+    if (telefono.includes(' ') || telefono.includes('-')) {
+      res.status(400).json({ message: 'El número de teléfono no puede contener espacios ni guiones' });
+      return;
+    }
+
+    try {
+      const fichaMedica = await this.fichaMedicaService.getFichaMedicaCompartidaByTelefono(telefono);
+      const fichaMedicaDto = GetFichaMedicaDto.create(fichaMedica);
+      res.status(200).json(fichaMedicaDto);
+    } catch (error) {
+      HandleError.throw(error, res);
+    }
+  };
+
   getFichaMedica = async (req: Request, res: Response) => {
     const { fichaMedicaID } = req.params;
     try {

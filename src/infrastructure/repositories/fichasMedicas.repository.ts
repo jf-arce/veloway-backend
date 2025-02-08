@@ -25,6 +25,21 @@ export class FichasMedicaRepository implements IFichasMedicasRepository {
     return FichaMedicaMapper.fromPrismaToEntity(fichaMedicaPrisma);
   }
 
+  public async getFichaMedicaCompartidaByTelefono(telefono: string): Promise<FichaMedica | null> {
+    const fichasMedicasPrisma = await this.prisma.fichas_medicas.findFirst({
+      where: {
+        compartir: true,
+        conductores: {
+          usuarios: {
+            telefono
+          }
+        }
+      }
+    });
+    if (!fichasMedicasPrisma) return null;
+    return FichaMedicaMapper.fromPrismaToEntity(fichasMedicasPrisma);
+  }
+
   public async getFichaMedicaByConductorId(conductorID: string): Promise<FichaMedica | null> {
     const fichaMedicaPrisma = await this.prisma.fichas_medicas.findFirst({
       where: {

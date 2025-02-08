@@ -71,8 +71,8 @@ export class VehiculoService {
     const vehiculoConductor = await this.vehiculoRepository.getByConductorId(vehiculoDto.conductorId);
     if (vehiculoConductor) throw CustomError.badRequest('El Conductor ya tiene un vehiculo registrado');
 
-    const vehiculoAseguradp = await TortuarSeguros.validarSeguro(vehiculoDto.patente.toUpperCase());
-    if (!vehiculoAseguradp) throw CustomError.badRequest('El vehiculo no esta asegurado');
+    // const vehiculoAsegurado = await TortuarSeguros.validarSeguro(vehiculoDto.patente.toUpperCase());
+    // if (!vehiculoAsegurado) throw CustomError.badRequest('El vehiculo no esta asegurado');
 
     await this.vehiculoRepository.create(vehiculo);
   }

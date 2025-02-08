@@ -46,6 +46,7 @@ import { ModeloController } from '../../presentation/controllers/modelo.controll
 import { TipoVehiculoService } from '../../application/services/tipoVehiculo.service';
 import { TipoVehiculoController } from '../../presentation/controllers/tipoVehiculo.controller';
 import { AuthOrApiKeyMiddlewareVerificator } from '../../presentation/middlewares/apiKey.middleware';
+import { DomicilioController } from '../../presentation/controllers/domicilio.controller';
 
 container.register(PrismaClient, { useValue: prismaClient });
 // Repositorios
@@ -122,6 +123,9 @@ export const modeloController = container.resolve(ModeloController);
 
 container.register(TipoVehiculoController, { useClass: TipoVehiculoController });
 export const tipoVehiculoController = container.resolve(TipoVehiculoController);
+
+container.register(DomicilioController, { useClass: DomicilioController });
+export const domicilioController = container.resolve(DomicilioController);
 
 
 // Middleware

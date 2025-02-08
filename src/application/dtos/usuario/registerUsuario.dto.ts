@@ -30,7 +30,7 @@ export class RegisterUsuarioDto {
       clienteValidation.data.nombre,
       clienteValidation.data.apellido,
       usuario.esConductor,
-      clienteValidation.data.telefono
+      clienteValidation.data.telefono.trim()
     )];
   }
 }
