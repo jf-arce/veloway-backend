@@ -125,11 +125,13 @@ export class UsuarioService {
 
 
   async existUserByApiKey(apiKey: string): Promise<boolean> {
-    // Buscar al usuario por la API Key proporcionada (comparable con el hash)
-    const hashedApiKey = await this.hashProvider.hash(apiKey);
-    const user = await this.usuarioRepository.findUserByApiKey(hashedApiKey);
-    if (!user) return false;
-    return true;
+    const allUsers = await this.usuarioRepository.getall();
+
+    const matches = await Promise.all(
+      allUsers.map(async user => await this.hashProvider.compare(apiKey, user.getApiKey()))
+    );
+
+    return matches.includes(true);
   }
 
   public async modificarUsuario(id: string, data: any): Promise<void> {
