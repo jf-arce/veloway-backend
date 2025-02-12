@@ -27,6 +27,7 @@ export class ApiKeyMiddleware {
       }
 
       next();
+      return;
     }
 
     try {
